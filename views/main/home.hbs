@@ -1,0 +1,39 @@
+<div class="hero">
+	<div class="container">
+		<div class="row">
+			<div class="hero-heading" style="font-family:Verdana, Geneva, Tahoma, sans-serif font-size:Verdana, Geneva, Tahoma, sans-serif">
+				Service for Lean Entrepreneur <br/>
+				Find it on SHOP CLAN.
+				<p>Browse. Buy. Pay. </p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container section">
+	<h1>
+		Newest Products
+	</h1>
+	<div class="row">
+		{{#each gigs}}
+		<div class="col-md-3">
+			<div class="gig-card">
+				<a href="/service_detail/{{ _id }}">
+					<img src="/img/copywrite.jpg" />
+				</a>
+				
+				<h4>
+					{{ title }}
+				</h4>
+				<h3>
+					${{ price }}
+				</h3>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+</div>
