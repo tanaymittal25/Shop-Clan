@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const GigSchema = new Schema ({
 
-    owner: { type:Schema.Types.ObjectId, ref:'user'},
+    owner: { type: Schema.Types.ObjectId, ref:'user'},
     title: String,
     category: String,
     about: String,
