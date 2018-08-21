@@ -13,10 +13,26 @@ router.get('/checkout/single_package/:id', (req, res, next) => {
     });
 });
 
-router.route('/payment')
+router.route('/confirm')
 .get((req, res, next) => {
-  res.render('checkout/payment');
+  res.render("checkout/confirm");
 })
+.post((req, res, next) => {
+    var order = new Order();
+    order.buyer = req.user._id;
+    order.seller = gig.owner;
+    order.gig = gig._id;
+    order.save(function(err) {
+      req.session.gig = null;
+      req.session.price = null;
+      res.redirect('/users/' + req.user._id + '/orders/' + order._id);
+    });
+});
+
+
+
+
+/*
 .post((req, res, next) => {
   var gig = req.session.gig;
   var price = req.session.price;
@@ -47,7 +63,7 @@ router.route('/payment')
   }).catch(function(err) {
     // Deal with an error
   });
-});
+});*/
 
 
 module.exports = router;
