@@ -6,9 +6,7 @@ const OrderSchema = new Schema({
     seller: { type: Schema.Types.ObjectId, ref: 'User'},
     gig: { type: Schema.Types.ObjectId, ref: 'Gig'},
     messages: [{
-        message: { type: String},
-        creator: {type: Schema.Types.ObjectId, ref: 'User'},
-        date: { type: Date}
+        type: Schema.Types.ObjectId, ref: 'Message'
     }],
     created: { type: Date, default: Date.now}
 });
