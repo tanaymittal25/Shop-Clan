@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const deepPopulate = require('mongoose-deep-populate')(mongoose)
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
@@ -10,5 +11,7 @@ const OrderSchema = new Schema({
     }],
     created: { type: Date, default: Date.now}
 });
+
+OrderSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model('Order', OrderSchema);
