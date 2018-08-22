@@ -42,6 +42,25 @@ router.get('/users/:userId/orders/:orderId', (req,res,next) =>{
     });
 });
 
+router.get('/users/:id/manage-orders', (req, res, next) => {
+  Order.find({ seller: req.user._id })
+    .populate('buyer')
+    .populate('seller')
+    .populate('gig')
+    .exec(function(err, orders){
+      res.render('order/order-seller', { orders: orders});
+    });
+});
+
+router.get('/users/:id/orders', (req, res, next) => {
+  Order.find({ buyer: req.user._id})
+    .populate('buyer')
+    .populate('selles')
+    .populate('gig')
+    .exec(function(err,orders){
+      res.render('order/order-buyer', {orders: orders});
+    });
+});
 
 
 

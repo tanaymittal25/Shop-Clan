@@ -6,7 +6,8 @@ module.exports = function(io) {
 
     const user = socket.request.user;
     console.log(user.name);
-
+    const orderId = socket.request.session.orderId;
+    console.log(orderId);
 
 
   });
