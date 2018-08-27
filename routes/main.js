@@ -2,6 +2,7 @@ const router = require('express').Router();
 const async = require('async');
 const Gig = require('../models/gig');
 const User = require('../models/user');
+const Promocode = require('../models/promocode');
 //const Promocode = require('../models/promocode');
 
 /*const algoliasearch = require('algoliasearch');
@@ -80,7 +81,7 @@ router.get('/service_detail/:id', (req, res, next) => {
     });*/
 });
 
-/*router.get('/api/add-promocode', (req, res, next) => {
+router.get('/api/add-promocode', (req, res, next) => {
   var promocode = new Promocode();
   promocode.name = "testcoupon";
   promocode.discount = 0.4;
@@ -102,6 +103,6 @@ router.post('/promocode', (req, res, next) => {
       res.json(0);
     }
   });
-});*/
+});
 
 module.exports = router;
