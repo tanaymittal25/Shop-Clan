@@ -18,11 +18,11 @@ $(function() {
           success: function(data) {
             console.log(data);
             if (data === 0) {
-              $('#promocodeResponse').html("Code Doesn't exist");
+             // $('#promocodeResponse').html("Code Doesn't exist");
             } else {
               $('#promocodeButton').html('Applied');
               $('#promocodeButton').prop('disabled', true);
-              $('#promocodeResponse').html("Successfully Applied the code!");
+             // $('#promocodeResponse').html("Successfully Applied the code!");
               $('#totalPrice').html(data);
             }
           }
