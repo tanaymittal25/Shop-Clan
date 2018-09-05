@@ -71,40 +71,18 @@ router.get('/users/:id/orders', (req, res, next) => {
     });
 });
 
-
-
-/*
-.post((req, res, next) => {
-  var gig = req.session.gig;
-  var price = req.session.price;
-  price *= 100;
-  stripe.customers.create({
-    email: req.user.email
-  }).then(function(customer){
-    return stripe.customers.createSource(customer.id, {
-      source: req.body.stripeToken
-    });
-  }).then(function(source) {
-    return stripe.charges.create({
-      amount: price,
-      currency: 'usd',
-      customer: source.customer
-    });
-  }).then(function(charge) {
-    // DO SOMETHING
-    var order = new Order();
-    order.buyer = req.user._id;
-    order.seller = gig.owner;
-    order.gig = gig._id;
-    order.save(function(err) {
-      req.session.gig = null;
-      req.session.price = null;
-      res.redirect('/users/' + req.user._id + '/orders/' + order._id);
-    });
-  }).catch(function(err) {
-    // Deal with an error
-  });
-});*/
-
+router.post('/add-to-cart', (req, res, next) => {
+  const gigId = req.body.gig_id;
+  User.update(
+    {
+      _id: req.user._id
+    },
+    {
+      $push: {cart: gigId}
+    }, function(err,count) {
+      res.json("Added to cart");
+    }
+  );
+});
 
 module.exports = router;

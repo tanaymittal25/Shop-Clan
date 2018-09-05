@@ -3,11 +3,10 @@ const async = require('async');
 const Gig = require('../models/gig');
 const User = require('../models/user');
 const Promocode = require('../models/promocode');
-//const Promocode = require('../models/promocode');
+const algoliasearch = require('algoliasearch');
 
-/*const algoliasearch = require('algoliasearch');
-var client = algoliasearch("L3E3RMHJBU", "f5a7555c009dfcabf7e108808f1ff931");
-var index = client.initIndex('GigSchema');*/
+var client = algoliasearch('1U5U5W4DI2', '93308083e427a5600d629fabed824c26');
+var index = client.initIndex('GigSchema');
 
 router.get('/', (req, res, next) => {
 
@@ -17,7 +16,7 @@ router.get('/', (req, res, next) => {
 });
 
 
-/*router.route('/search')
+router.route('/search')
   .get((req, res, next) => {
     if (req.query.q) {
       index.search(req.query.q, function(err, content) {
@@ -28,7 +27,7 @@ router.get('/', (req, res, next) => {
   })
   .post((req, res, next) => {
     res.redirect('/search/?q=' + req.body.search_input);
-  });*/
+  });
 
 router.get('/my-gigs', (req, res, next) => {
   Gig.find({ owner: req.user._id }, function(err, gigs) {
@@ -72,13 +71,8 @@ router.get('/service_detail/:id', (req, res, next) => {
   Gig.findOne({ _id: req.params.id }, function(err,gig){
         if(err) 
             throw err;
-        // res.send(gig);
         res.render('main/service_detail', {gig: gig})
   });
-  /*  .populate('owner')
-    .exec(function(err, gig) {
-      res.render('main/service_detail', { gig : gig });
-    });*/
 });
 
 router.get('/api/add-promocode', (req, res, next) => {

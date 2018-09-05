@@ -27,7 +27,7 @@ GigSchema.plugin(mongooseAlgolia,{
     },
     mappings: {
       title: function(value) {
-        return `Title: ${value}`
+        return `${value}`
       }
     },
     debug: true // Default: false -> If true operations are logged out in your console
