@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Gig = require('../models/gig');
 const Order = require('../models/order');
+const User = require('../models/user');
 
 const fee = 3.15;
 
@@ -10,6 +11,26 @@ router.get('/checkout/single_package/:id', (req, res, next) => {
         req.session.gig = gig;
         req.session.price = totalPrice;
         res.render('checkout/single_package', { gig: gig, totalPrice: totalPrice});
+    });
+});
+
+router.get('/checkout/process_cart', (req, res, next) => {
+  User.findOne({ _id: req.user._id })
+    .populate('cart')
+    .exec(function(err, user) {
+      var price = 0;
+      var cartIsEmpty = true;
+      if(user.cart.length > 0) {
+        user.cart.map(function(item) {
+          price += item.price;
+        });
+        var totalPrice = price + fee;
+      } else {
+        cartIsEmpty = false;
+      }
+      req.session.price = totalPrice;
+      req.session.gig = user.cart;
+      res.render('order/cart', { foundUser : user, totalPrice: totalPrice, sub_total: price, cartIsEmpty: cartIsEmpty });
     });
 });
 
@@ -84,5 +105,29 @@ router.post('/add-to-cart', (req, res, next) => {
     }
   );
 });
+
+router.post('/remove-item', (req, res, next) => {
+  const gigId = req.body.gig_id;
+  async.waterfall([ //for mongoose operations
+    function(callback) {
+      Gig.findOne({ _id: gigId }, function(err,gig) {
+        callback(err,gig);
+      })
+    },
+    function(gig, callback) {
+      User.update(
+        {
+          _id: req.user._id
+        },
+        {
+          $pull: {cart: gigId}
+        }, function(err,count) {
+          var totalPrice = req.session.price - gig.price;
+          res.json({totalPrice});
+        }
+      );
+    }
+  ])
+})
 
 module.exports = router;
