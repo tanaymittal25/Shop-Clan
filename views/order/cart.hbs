@@ -3,7 +3,6 @@
         <div class="col-md-7">
             {{#each foundUser.cart}}
                 <div class="overview" id="{{_id}}">
-                    <input type="hidden" id="gig_id" value="{{_id}}"/>
                     <div class="cart-card">
                         <div class="name">
                             <div class="space-between">
@@ -36,6 +35,7 @@
                     <div class="margin-both">
                         <h2 class="text-center">Summary</h2>
                         {{#if cartIsEmpty }}
+                        <div class="cart">
                         <hr/>
                         <div class="inner">
                             <img class="img-circle" src="{{gig.picture}}" />
@@ -54,7 +54,7 @@
                         <div class="space-between">
                             <h4>
                                 <span>Subtotal: </span>
-                                <span class="dollar fee">₹{{sub_total}}</span>
+                                <span class="dollar fee">₹<span id="subTotal">{{sub_total}}</span></span>
                             </h4>
                         </div>
                         <div class="space-between">
@@ -71,11 +71,12 @@
                             </h3>
                         </div>
                         <hr/>
-                        <a href="/confirm" class="btn btn-success btn-lg proceed-btn">Place Order</a>
+                        <a href="/confirm/cart" class="btn btn-success btn-lg proceed-btn">Place Order</a>
                         {{else}}
                             Cart is empty
 
                         {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>

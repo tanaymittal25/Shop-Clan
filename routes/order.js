@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const async = require('async');
 const Gig = require('../models/gig');
 const Order = require('../models/order');
 const User = require('../models/user');
@@ -49,6 +50,31 @@ router.route('/confirm')
       req.session.gig = null;
       req.session.price = null;
       res.redirect('/users/' + req.user._id + '/orders/' + order._id);
+    });
+});
+
+router.route('/confirm/cart')
+.get((req, res, next) => {
+  res.render("checkout/confirm");
+})
+.post((req, res, next) => {
+    var gigs = req.session.gig;
+    var price = req.session.price;
+    
+    gigs.map(function(gig) {
+      var order = new Order();
+      order.buyer = req.user._id;
+      order.seller = gig.owner;
+      order.gig = gig._id;
+      order.save(function(err) {
+        req.session.gig = null;
+        req.session.price = null;
+      });
+    });
+    User.update({_id: req.user._id}, {$set:{cart:[]}}, function(err, updated) {
+      if(updated) {
+        res.redirect('/users/' + req.user._id + '/orders');
+      }
     });
 });
 
@@ -123,11 +149,11 @@ router.post('/remove-item', (req, res, next) => {
           $pull: {cart: gigId}
         }, function(err,count) {
           var totalPrice = req.session.price - gig.price;
-          res.json({totalPrice});
+          res.json({totalPrice: totalPrice, price: gig.price});
         }
       );
     }
-  ])
-})
+  ]);
+});
 
 module.exports = router;
