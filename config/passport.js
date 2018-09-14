@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 const config = require('./secret');
 const User = require('../models/user');
@@ -42,6 +43,28 @@ passport.use('local-login', new LocalStrategy({
   });
 
 }));
+
+/*passport.use(new GoogleStrategy ({
+  clientID: '83965076315-697avjv7fmjlh0m51sjp95o3jprcs7qu.apps.googleusercontent.com',
+  clientSecret: '0L1W4H1OHUAYjE9mfWhgf_jZ',
+  callbackURL: 'http://localhost:3000/auth/google/callback',
+}, function(accessToken, refreshToken, profile, next) {
+  User.findOne({ googleId: profile.id}, function(err, user) {
+    if(user) {
+      return next(err,user);
+    } else {
+      var newUser = new User();
+      newUser.email = profile.emails[0].value;
+      newUser.googleId = profile.id;
+      newUser.name = profile.displayName;
+      newUser.photo = profile._json.image.url;
+      newUser.save(function(err) {
+        if(err) throw err;
+        next(err, newUser);
+      });
+    }
+  });
+}));*/
 
 
 exports.isAuthenticated = function(req, res, next) {

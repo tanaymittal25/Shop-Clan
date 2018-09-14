@@ -48,6 +48,16 @@ router.route('/login')
     failureFlash : true // allow flash messages
   }));
 
+/*router.get('/auth/google', passport.authenticate('google', { scope: 'email'}));
+
+router.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/profile',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+*/
+
+
 /* PROFILE ROUTE */
 router.get('/profile', passportConfig.isAuthenticated, (req, res, next) => {
   res.render('accounts/profile');
