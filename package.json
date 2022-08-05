@@ -20,7 +20,7 @@
     "express-session": "^1.15.2",
     "hbs": "^4.0.1",
     "mongodb": "^2.1.6",
-    "mongoose": "^4.7.1",
+    "mongoose": "^5.7.5",
     "mongoose-algolia": "^1.7.1",
     "mongoose-deep-populate": "^3.1.1",
     "morgan": "^1.8.1",
